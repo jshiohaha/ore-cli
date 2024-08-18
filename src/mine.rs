@@ -196,12 +196,17 @@ impl Miner {
             }
         }
 
-        // Update log
-        progress_bar.finish_with_message(format!(
+        let difficulty_log = format!(
             "Best hash: {} (difficulty {})",
             bs58::encode(best_hash.h).into_string(),
             best_difficulty
-        ));
+        );
+
+        // Update log
+        progress_bar.finish_with_message(difficulty_log.clone());
+
+        // also dump message to stdout so that consuming client can pick it up
+        println!("{}", difficulty_log.clone());
 
         Solution::new(best_hash.d, best_nonce.to_le_bytes())
     }

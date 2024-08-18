@@ -236,11 +236,16 @@ impl Miner {
                                                         "  Timestamp: {}",
                                                         formatted_time
                                                     ));
-                                                    progress_bar.finish_with_message(format!(
-                                                        "{} {}",
-                                                        "OK".bold().green(),
-                                                        sig
-                                                    ));
+
+                                                    let confirmed_msg =
+                                                        format!("{} {}", "OK".bold().green(), sig);
+
+                                                    progress_bar
+                                                        .finish_with_message(confirmed_msg.clone());
+
+                                                    // also dump message to stdout so that consuming client can pick it up
+                                                    println!("{}", confirmed_msg.clone());
+
                                                     return Ok(sig);
                                                 }
                                             }
